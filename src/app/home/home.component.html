@@ -52,8 +52,7 @@
                 </dx-form>
                 <br />
                 <div style="float: right;">
-                    <button mat-raised-button type="submit" color="primary" matTooltipPosition="above" matTooltip="Klikni za filtriranje" (click)="apply()"
-                        [disabled]="formInit && !myForm?.instance?.validate()?.isValid" class="mr-1">
+                    <button mat-raised-button type="submit" color="primary" matTooltipPosition="above" matTooltip="Klikni za filtriranje" (click)="apply()" [disabled]="formInit && !myForm?.instance?.validate()?.isValid" class="mr-1">
                         <mat-icon>search</mat-icon>
                         <span>Primijeni</span>
                     </button>

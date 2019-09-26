@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
     this.tileViewItems = this.dataService.getCars();
   }
 
-  public apply(e: any) {
+  public apply() {
     var propCount = 0;
     for (var property in this.searchForm) {
       if (this.searchForm[property]) {
