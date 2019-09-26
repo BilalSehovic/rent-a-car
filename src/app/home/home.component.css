@@ -1,0 +1,18 @@
+::ng-deep .dx-tile-content .image {
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    display: block;
+  }
+  
+  ::ng-deep .dx-tile-content .imagetext {
+    font-size: 12px;
+    position: absolute;
+    background-color: black;
+    color: white;
+    opacity: 0.6;
+    padding: 2px;
+    left: 9px;
+    bottom: 9px;
+  }

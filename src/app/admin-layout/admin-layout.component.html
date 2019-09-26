@@ -1,0 +1,114 @@
+<style>
+    .border {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  
+    .iconmargin {
+      margin-left: 12px !important;
+      margin-right: 12px !important;
+    }
+  
+    .header-text {
+      font-family: Helvetica, Arial, sans-serif;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #333;
+      text-transform: uppercase;
+      padding-top: 10px;
+      font-weight: 600;
+    }
+  
+    .header-logo {
+      display: flex;
+      margin-left: 10%;
+      margin-right: 10%;
+    }
+  
+    @media only screen and (max-width:900px) {
+      .header-text {
+        font-size: 10px;
+        padding-top: 15px;
+      }
+  
+      .header-logo {
+        margin-left: 5%;
+        margin-right: 5%;
+      }
+    }
+  
+    .button {
+      width: 290px;
+      margin-top: 7px;
+      /*margin-left: 5px;*/
+      margin-right: 5px;
+      /*background: rgb(74,111,130);*/
+    }
+  
+    .relPredmet {
+      padding-left: 24px !important;
+      height: 40px !important;
+      overflow: hidden;
+    }
+  
+    .obrisiSveButton {
+      /* position: absolute; */
+      bottom: 0%;
+      align-self: center;
+      width: 310px;
+      color: white;
+      margin-bottom: 20px;
+      /*max-height: 5%;*/
+      border-style: ridge;
+    }
+  
+    .zahtevstyle {
+      overflow: hidden;
+      height: auto;
+      max-height: 100px;
+      max-width: 205px;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      line-height: 24px;
+    }
+  
+    .predmetstyle {
+      padding-left: 20px;
+      width: 150px;
+      /* overflow:hidden; height:auto; max-height:62px; max-width:155px; */
+    }
+  
+    .paddingLeft  {
+      padding-left: 50px;
+      font-style: italic;
+    }
+  
+  </style>
+  
+  <div class="app mat-typography">
+      <div id="headerContent" class="Header_Back"  *ngIf="!isPrint">
+          <a class="logoLeft" [routerLink]="'/home'">
+              <!-- <img src="assets/images/img_trans.png" class="sr-logo" alt="Logo sr" style="float: left;" />
+              <img src="assets/images/img_trans.png" [ngClass]="{
+                'logotxt_en-US':currentLang == 'en-US',
+                'logotxt_sr-Cyrl-CS':currentLang == 'sr-Cyrl-RS',
+                'logotxt_sr-Latn-CS':currentLang == 'sr-Latn-RS'
+              }"  alt="Logo prevod" style="float: left;" /> -->
+          </a>
+          <!-- <div class="floatRightLargeScreen"><user-actions ></user-actions></div> -->
+      </div>
+    <mat-sidenav-container class="app-inner">
+      <!-- <div *ngIf="isHome">
+        <ul style="list-style-type:none;">
+          <li *ngFor="let route of availableRoutes">
+            <a [routerLink]="['/', route.path]">
+              <mat-icon *ngIf="route.data.icon" style="vertical-align: bottom;">{{ route.data?.icon }}</mat-icon>&nbsp;&nbsp;
+              <span [ngClass]="{'paddingLeft': route.data.indent==true}">{{ route.data?.name | translate | uppercase }}</span>
+            </a>
+          </li>
+        </ul>
+      </div> -->
+      <router-outlet></router-outlet>
+    </mat-sidenav-container>
+  </div>
+  

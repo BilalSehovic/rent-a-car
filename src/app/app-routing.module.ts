@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { PaymentComponent } from './payment/payment.component';
 import { BookedConfirmationComponent } from './booked-confirmation/booked-confirmation.component';
+import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 
 
 const routes: Routes = [
@@ -12,9 +13,15 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'home',
-    component: HomeComponent,
+    path: '',
+    component: AdminLayoutComponent,
     children: [
+      { path: '', redirectTo: '/home', pathMatch: 'full' },
+      {
+        path: 'home',
+        component: HomeComponent,
+        data: { name: 'HOME' }
+      },
       {
         path: 'payment',
         component: PaymentComponent

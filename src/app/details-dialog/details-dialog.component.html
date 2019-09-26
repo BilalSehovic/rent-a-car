@@ -1,1 +1,66 @@
-<p>details-dialog works!</p>
+<h2 mat-dialog-title class="dialogtitle">
+    {{ title }}
+    <button style="float: right;" mat-icon-button type="button" matTooltip="Zatvori" matTooltipPosition="above"
+        mat-dialog-close class="closebutton">
+        <mat-icon>close</mat-icon>
+    </button>
+</h2>
+<mat-dialog-content cdkFocusInitial>
+    <hr />
+    <div fxLayout="row">
+        <div fxFlex="30" class="title-row">
+            <b>Proizvođač vozila: </b>
+        </div>
+        <div fxFlex class="details-row">{{data?.proizvodacVozila}}</div>
+    </div>
+    <hr />
+    <div fxLayout="row">
+        <div fxFlex="30" class="title-row">
+            <b>Model vozila: </b>
+        </div>
+        <div fxFlex class="details-row">{{data?.modelVozila}}</div>
+    </div>
+    <hr />
+    <div fxLayout="row">
+        <div fxFlex="30" class="title-row">
+            <b>Rent od: </b></div>
+        <div fxFlex class="details-row">{{data?.rentOd | date: 'dd.MM.yyyy'}}</div>
+    </div>
+    <hr />
+    <div fxLayout="row">
+        <div fxFlex="30" class="title-row">
+            <b>Rent do: </b></div>
+        <div fxFlex class="details-row">{{data?.rentDo | date: 'dd.MM.yyyy'}}</div>
+    </div>
+    <hr *ngIf="data.Dizel" /><div fxLayout="row" *ngIf="data.Dizel"><div fxFlex="30" class="title-row"><b>Dizel: </b></div><div fxFlex class="details-row">DA</div></div>
+    <hr *ngIf="data.Benzin" /><div fxLayout="row" *ngIf="data.Benzin"><div fxFlex="30" class="title-row"><b>Benzin: </b></div><div fxFlex class="details-row">DA</div></div>
+    <hr *ngIf="data.Plin" /><div fxLayout="row" *ngIf="data.Plin"><div fxFlex="30" class="title-row"><b>Plin: </b></div><div fxFlex class="details-row">DA</div></div>
+    <hr *ngIf="data.Elektro" /><div fxLayout="row" *ngIf="data.Elektro"><div fxFlex="30" class="title-row"><b>Elektro: </b></div><div fxFlex class="details-row">DA</div></div>
+    <hr *ngIf="data.Hibrid" /><div fxLayout="row" *ngIf="data.Hibrid"><div fxFlex="30" class="title-row"><b>Hibrid: </b></div><div fxFlex class="details-row">DA</div></div>
+    
+    <hr *ngIf="data.Limuzina" /><div fxLayout="row" *ngIf="data.Limuzina"><div fxFlex="30" class="title-row"><b>Limuzina: </b></div><div fxFlex class="details-row">DA</div></div>
+    <hr *ngIf="data.MaloAuto" /><div fxLayout="row" *ngIf="data.MaloAuto"><div fxFlex="30" class="title-row"><b>MaloAuto: </b></div><div fxFlex class="details-row">DA</div></div>
+    <hr *ngIf="data.Karavan" /><div fxLayout="row" *ngIf="data.Karavan"><div fxFlex="30" class="title-row"><b>Karavan: </b></div><div fxFlex class="details-row">DA</div></div>
+    <hr *ngIf="data.Kombi" /><div fxLayout="row" *ngIf="data.Kombi"><div fxFlex="30" class="title-row"><b>Kombi: </b></div><div fxFlex class="details-row">DA</div></div>
+    <hr *ngIf="data.Terenac" /><div fxLayout="row" *ngIf="data.Terenac"><div fxFlex="30" class="title-row"><b>Terenac: </b></div><div fxFlex class="details-row">DA</div></div>
+    <hr *ngIf="data.Kabriolet" /><div fxLayout="row" *ngIf="data.Kabriolet"><div fxFlex="30" class="title-row"><b>Kabriolet: </b></div><div fxFlex class="details-row">DA</div></div>
+    <hr *ngIf="data.Oldtimer" /><div fxLayout="row" *ngIf="data.Oldtimer"><div fxFlex="30" class="title-row"><b>Oldtimer: </b></div><div fxFlex class="details-row">DA</div></div>
+
+    <hr *ngIf="data.slike" /><div fxLayout="row" *ngIf="data.slike"><div fxFlex="30" class="title-row"><b>Slike: </b></div><div fxFlex class="details-row"> </div></div>
+    <div>
+        <div *ngFor="let attachment of data.slike">
+            <img src="{{attachment}}" (load)="imgLoad($event)" [ngClass]="{'imgScale': clicked}" (click)="clicked = !clicked" /> <br />
+        </div>
+    </div>
+
+    <div *ngIf="reserveShow">
+        <br />
+        <br />
+
+
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="dialogactions">
+    <button mat-raised-button type="button" color="primary" (click)="reserve()" [disabled]="data?.rentDo < danas"><mat-icon>done_outline</mat-icon>  Rezerviši</button>
+    <button mat-button color="primary" mat-dialog-close>Otkaži</button>
+</mat-dialog-actions>
