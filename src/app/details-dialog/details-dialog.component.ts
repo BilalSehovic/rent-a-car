@@ -13,6 +13,7 @@ export class DetailsDialogComponent implements OnInit {
   public title = "";
   public karticaForm: any = {};
   public clicked: boolean = false;
+  public formInit: boolean = false;
   public reserveShow: boolean = false;
   public danas: Date = new Date();
 
