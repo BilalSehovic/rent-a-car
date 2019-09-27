@@ -1,8 +1,8 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-title>
+        <!-- <mat-card-title>
             <h2>Iznajmljivanje vozila / RENT A CAR</h2>
-        </mat-card-title>
+        </mat-card-title> -->
     </mat-card-header>
     <mat-card-content>
         <mat-accordion class="example-headers-align">
@@ -72,24 +72,45 @@
             </mat-radio-group>
         </div>
         <dx-data-grid *ngIf="viewMode=='grid'" #grid id="gridContainer" [dataSource]="carsDS"
-            [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true">
+            [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true"
+            (onRowInserted)="onRowInserted($event)">
             <dxo-filter-row [visible]="false"></dxo-filter-row>
             <dxo-header-filter [visible]="false"></dxo-header-filter>
             <dxo-search-panel [visible]="true" [width]="180" placeholder="Pretraga..."></dxo-search-panel>
-            <dxo-paging [pageSize]="10"></dxo-paging>
+            <dxo-paging [pageSize]="5"></dxo-paging>
             <dxo-pager [visible]="true" [showPageSizeSelector]="true" [showNavigationButtons]="true" [allowedPageSizes]="[5, 10, 15,20]" [showInfo]="true"></dxo-pager>
             <dxo-load-panel [enabled]="false"></dxo-load-panel>
+            <dxo-editing mode="popup" [allowAdding]="allowAdding"></dxo-editing>
 
-            <dxi-column caption="Otvori" cellTemplate="openTemplate" [width]="80" [allowSorting]="false" [allowGrouping]="false" [allowFiltering]="false"></dxi-column>
+            <dxi-column caption="Otvori" cellTemplate="openTemplate" [width]="55" [formItem]="{visible: false}" [allowSorting]="false" [allowGrouping]="false" [allowFiltering]="false"></dxi-column>
             <dxi-column dataField="proizvodacVozila" dataType="string"></dxi-column>
             <dxi-column dataField="modelVozila" dataType="string"></dxi-column>
             <dxi-column dataField="rentOd" dataType="date" format="dd.MM.yyyy" [width]="140"></dxi-column>
             <dxi-column dataField="rentDo" dataType="date" format="dd.MM.yyyy" [width]="140"></dxi-column>
+            <dxi-column dataField="Rezervisan" caption="Dostupan" cellTemplate="rezervisanTemplate" [width]="75" [allowSorting]="false" [allowGrouping]="false" [allowFiltering]="false"></dxi-column>
+            <dxi-column dataField="RentKuca" dataType="string"></dxi-column>
+
+            <dxi-column dataField="Dizel" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="Benzin" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="Plin" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="Elektro" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="Hibrid" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="Limuzina" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="MaloAuto" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="Karavan" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="Kombi" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="Terenac" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="Kabriolet" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
+            <dxi-column dataField="Oldtimer" [visible]="false" [formItem]="{editorType: 'dxCheckBox'}"></dxi-column>
 
             <div *dxTemplate="let item of 'openTemplate'">
                 <a matTooltipPosition="above" matTooltip="Detalji" (click)="details(item)">
                     <mat-icon>search</mat-icon>
                 </a>
+            </div>
+            <div *dxTemplate="let item of 'rezervisanTemplate'">
+                <span *ngIf="!item.data.Rezervisan" class="dotgreen"></span>
+                <span *ngIf="item.data.Rezervisan" class="dotred"></span>
             </div>
         </dx-data-grid>
         <dx-tile-view *ngIf="viewMode=='tiles'" [baseItemHeight]="120" [baseItemWidth]="185" [itemMargin]="10" [direction]="'vertical'">

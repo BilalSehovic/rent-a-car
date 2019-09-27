@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
@@ -10,62 +10,39 @@ import { MatSnackBar } from '@angular/material';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  loading = false;
-  submitted = false;
-  returnUrl: string;
+  loading: boolean = false;
+  passwordVisible: boolean = false;
 
-  constructor(
-      private formBuilder: FormBuilder,
-      private route: ActivatedRoute,
-      private router: Router,
-      private snackBar: MatSnackBar
-  ) { }
+  constructor(@Inject(Router) private router: Router, private formBuilder: FormBuilder, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-      this.loginForm = this.formBuilder.group({
-          username: ['', Validators.required],
-          password: ['', Validators.required]
-      });
-
-      // get return url from route parameters or default to '/'
-      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.compose([Validators.required, Validators.maxLength(25)])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(20)])]
+    });
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  login() {
+    this.loading = true;
+    let valid = false;
+    let form = this.loginForm.getRawValue();
+    let usernames = ['admin', 'user', 'renter'];
+    if (form.username && form.password && usernames.includes(form.username)) {
+      valid = true;
+      localStorage.setItem('login', 'true');
+      localStorage.setItem('username', form.username);
+      localStorage.setItem('password', form.password);
+      localStorage.setItem('role', form.username);
+    }
 
-  onSubmit() {
-      this.submitted = true;
-
-      // stop here if form is invalid
-      if (this.loginForm.invalid) {
-          return;
+    setTimeout(() => {
+      if (valid) {
+        this.router.navigate(['/home']);
       }
-
-      this.loading = true;
-
-      setTimeout(() => {
-        if (this.loginForm.controls.username.value != this.loginForm.controls.password.value) {
-          this.snackBar.open('Ne postoji nalog', '', {duration: 5000});
-          this.loginForm.controls.password.reset();
-          return;
-        }
-
-        localStorage.setItem('username', this.loginForm.controls.username.value);
-        this.router.navigate(['home']);
-
-      }, 2000);
-
-      // this.authenticationService.login(this.f.username.value, this.f.password.value)
-      //     .pipe(first())
-      //     .subscribe(
-      //         data => {
-      //             this.router.navigate([this.returnUrl]);
-      //         },
-      //         error => {
-      //             this.alertService.error(error);
-      //             this.loading = false;
-      //         });
+      else {
+        this.loading = false;
+        this.loginForm.reset();
+      }
+    }, 2000);
   }
-
 }
